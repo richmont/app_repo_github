@@ -8,9 +8,12 @@ class ClienteBase():
     def __init__(self, api_url:str, timeout: int = 3) -> None:
         self._api_url = api_url
         self._timeout = timeout
+
     def parse_dados(self, resposta: str) -> dict:
         pass
-
+    
+    def consultar(self) -> str:
+        pass
 
 class Erros():
     class InformacaoAusente(Exception):
@@ -26,6 +29,8 @@ class Erros():
 class ClienteUsuarios(ClienteBase):
     def __init__(self, api_url: str, usuario: str, timeout: int = 3) -> None:
         super().__init__(api_url, timeout)
+        self._usuario = usuario
+        self._api_url = f"{self._api_url}{self._usuario}"
         self.login = None
         self.id = None
         self.avatar_url = None
@@ -33,13 +38,13 @@ class ClienteUsuarios(ClienteBase):
         self.repos_url = None
         self.nome = None
 
-        self._usuario = usuario
-        _res_usuario = self.consultar_usuario()
+        
+        _res_usuario = self.consultar()
         self.parse_dados(_res_usuario)
     
-    def consultar_usuario(self) -> str:
+    def consultar(self) -> str:
         try:
-            res = requests.get(f'{self._api_url}{self._usuario}', timeout=self._timeout)
+            res = requests.get(f'{self._api_url}', timeout=self._timeout)
             if res.status_code == 200:
                 logger.info("Não retornou erro ao buscar usuario, continuando")
                 return res.json()
@@ -47,6 +52,7 @@ class ClienteUsuarios(ClienteBase):
                 raise Erros.UsuarioNaoExiste("verifique o nome de usuário: %s", self._usuario)
         except requests.exceptions.ConnectionError:
             raise Erros.UrlIncorreto("verifique o URL")
+
     def parse_dados(self, resposta: dict) -> None:
         self.login = resposta['login']
         self.id = resposta['id']
@@ -54,9 +60,27 @@ class ClienteUsuarios(ClienteBase):
         self.html_url = resposta['html_url']
         self.repos_url = resposta['repos_url']
         self.nome = resposta['name']
-    #except IndexError:
-        #raise Erros.InformacaoAusente("Falta uma informação essencial deste usuário")
 
+class ClienteRepositorios(ClienteBase):
+    def __init__(self, api_url: str, timeout: int = 3) -> None:
+        """coleta a listagem dos repositórios de um usuário
+
+        Args:
+            api_url (str): Neste caso, o URL dos repositórios
+            timeout (int, opcional): Limite do tempo de resposta. Padrão 3.
+        """
+        super().__init__(api_url, timeout)
+
+    def consultar(self):
+        try:
+            res = requests.get(f'{self._api_url}', timeout=self._timeout)
+            if res.status_code == 200:
+                logger.info("Não retornou erro ao buscar usuario, continuando")
+                return res.json()
+            else:
+                raise Erros.UsuarioNaoExiste("verifique o nome de usuário: %s", self._usuario)
+        except requests.exceptions.ConnectionError:
+            raise Erros.UrlIncorreto("verifique o URL")
 
 if __name__ == "__main__":
     cliente = ClienteUsuarios(f"{GH_API_BASE_URL}{GH_USUARIOS_ENDPOINT}", 'aiushdiausduasd')
