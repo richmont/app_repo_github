@@ -13,13 +13,21 @@ class ClienteBase():
         pass
     
     def consultar(self) -> str:
-        pass
+        try:
+            res = requests.get(f'{self._api_url}', timeout=self._timeout)
+            if res.status_code == 200:
+                logger.info("Não retornou erro ao buscar objeto, continuando")
+                return res.json()
+            else:
+                raise Erros.ObjetoNaoExiste("verifique o elemento consultado na API: %s", self._api_url)
+        except requests.exceptions.ConnectionError:
+            raise Erros.UrlIncorreto("verifique o URL")
 
 class Erros():
     class InformacaoAusente(Exception):
         pass
 
-    class UsuarioNaoExiste(Exception):
+    class ObjetoNaoExiste(Exception):
         pass
 
     class UrlIncorreto(Exception):
@@ -42,16 +50,7 @@ class ClienteUsuarios(ClienteBase):
         _res_usuario = self.consultar()
         self.parse_dados(_res_usuario)
     
-    def consultar(self) -> str:
-        try:
-            res = requests.get(f'{self._api_url}', timeout=self._timeout)
-            if res.status_code == 200:
-                logger.info("Não retornou erro ao buscar usuario, continuando")
-                return res.json()
-            else:
-                raise Erros.UsuarioNaoExiste("verifique o nome de usuário: %s", self._usuario)
-        except requests.exceptions.ConnectionError:
-            raise Erros.UrlIncorreto("verifique o URL")
+
 
     def parse_dados(self, resposta: dict) -> None:
         self.login = resposta['login']

@@ -12,7 +12,7 @@ class Test_Cliente_usuario_nao_existe():
     def test_nome_usuario_aleatorio(self):
         try:
             cliente = ClienteUsuarios(f"{GH_API_BASE_URL}{GH_USUARIOS_ENDPOINT}", 'aiushdiausduasd')
-        except Erros.UsuarioNaoExiste:
+        except Erros.ObjetoNaoExiste:
             assert True
         
 
