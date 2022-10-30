@@ -1,3 +1,6 @@
+![Pytest](https://github.com/richmont/app_repo_github/actions/workflows/pytest.yml/badge.svg?event=push)  
+
+
 Um app simples, que exiba a lista de seus próprios repositórios GITHUB usando a API Graphql pública do GITHUB, ou a API Rest pública do GITHUB.  
 
 Somente uma listagem de repositórios pessoais e públicos, mas precisa conter:  
