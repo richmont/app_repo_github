@@ -25,7 +25,7 @@ class ClienteBase():
                 return res.json()
             else:
                 mensagem = res.json()['message']
-                raise Erros.ObjetoNaoExiste("verifique o elemento consultado na API: mensagem de erro: %s", mensagem=mensagem)
+                raise Erros.ObjetoNaoExiste(mensagem=mensagem)
         except requests.exceptions.ConnectionError:
             raise Erros.UrlIncorreto("verifique o URL")
 
