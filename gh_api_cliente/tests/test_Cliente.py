@@ -14,6 +14,8 @@ class Test_Cliente_usuario_nao_existe():
             cliente = ClienteUsuarios(f"{GH_API_BASE_URL}{GH_USUARIOS_ENDPOINT}", 'aiushdiausduasd')
         except Erros.ObjetoNaoExiste:
             assert True
+        except Erros.LimiteAPI:
+            assert True
         
 
 class Test_Cliente_usuario_sem_repositorios():
