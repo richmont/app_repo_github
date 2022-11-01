@@ -1,4 +1,4 @@
-from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT, PERSONAL_TOKEN
+from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 import requests
 import logging
 import dateutil.parser
@@ -6,8 +6,6 @@ from Sessao import Session
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("Cliente")
-
-
 
 class ClienteBase():
     def __init__(self, api_url: str, timeout: int = 3) -> None:
@@ -24,6 +22,7 @@ class ClienteBase():
     
     def consultar(self) -> str:
         try:
+
             res = self.session.get(f'{self._api_url}', timeout=self._timeout)
             self.requisicoes_restantes = int(res.headers['x-ratelimit-remaining'])
             if res.status_code == 200:
