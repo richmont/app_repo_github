@@ -1,8 +1,9 @@
-from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
+from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT, PERSONAL_TOKEN
 import requests
 import logging
-import json
 import dateutil.parser
+from Sessao import Session
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("Cliente")
 
@@ -12,9 +13,10 @@ class ClienteBase():
     def __init__(self, api_url: str, timeout: int = 3) -> None:
         self._api_url = api_url
         self._timeout = timeout
-        
-        self._resposta = self.consultar()
-        logger.warning("requisições restantes disponíveis: %s", self.requisicoes_restantes)
+        with Session as session:
+            self.session = session
+            self._resposta = self.consultar()
+            logger.warning("requisições restantes disponíveis: %s", self.requisicoes_restantes)
         
 
     def parse_dados(self, resposta: str):
@@ -22,7 +24,7 @@ class ClienteBase():
     
     def consultar(self) -> str:
         try:
-            res = requests.get(f'{self._api_url}', timeout=self._timeout)
+            res = self.session.get(f'{self._api_url}', timeout=self._timeout)
             self.requisicoes_restantes = int(res.headers['x-ratelimit-remaining'])
             if res.status_code == 200:
                 logger.info("Não retornou erro ao buscar objeto, continuando")
