@@ -1,0 +1,43 @@
+
+{% load static %}
+
+<head>
+    <title>App repositórios do github</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="{% static 'index/css/index.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="display-5 cabecalho">Exiba os repositórios de um usuário do Github</h1>  
+    <div class="container-form-usuario">
+        <form class='form-group' action="" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">https://github.com/users/</span>
+                </div>
+                <input name='input-usuario-github' type="text" placeholder="Insira o usuário do github aqui" class="form-control" id="input-usuario-github" aria-describedby="basic-addon3">
+                <input type="submit" value="consultar"></input>
+            </div>
+        </form>
+    </div>
+    
+    {% if usuario %}
+        <ul class="dados-usuario">
+        <li class="usuario-id">{{usuario.id}}</li>
+        <li class="usuario-nome">{{usuario.nome}}</li>
+        <li class="usuario-login">{{usuario.login}}</li>
+        <li><img src='{{usuario.avatar_url}}' class="usuario-avatar_url"></img></li>
+        <li class="usuario-html-url"><a href="{{usuario.html_url}}"></a></li>
+        </ul>
+    {% endif %}
+
+    {% if messages %}
+    <div class="mensagem-erro-lista"></div>
+    
+        {% for message in messages %}
+            <li class="mensagem-erro">{{ message }}</li>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html
