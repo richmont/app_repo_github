@@ -29,6 +29,36 @@
         <li><img src='{{usuario.avatar_url}}' class="usuario-avatar_url"></img></li>
         <li class="usuario-html-url"><a href="{{usuario.html_url}}"></a></li>
         </ul>
+        {% for repo in repo_alfabetico %}
+            
+            <li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>
+            <li class="repo-nome alfabetico">Nome repositório: {{ repo.nome }}</li>
+            <li class="repo-html-url alfabetico">Link do repositório: <a href="{{ repo.html_url }}"></a></li>
+            <li class="repo-descricao alfabetico">Descrição: {{ repo.descricao }}</li>
+            <li class="repo-data_ultimo_commit_str alfabetico">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
+            {% if repo.arquivado %}
+                <li class="repo-arquivado alfabetico">Arquivado: Sim</li>
+            {% else %}
+                <li class="repo-arquivado alfabetico">Arquivado: Não</li>
+            {% endif %}
+
+        {% endfor %}
+
+        {% for repo in repo_ultimo_commit %}
+            
+        <li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>
+        <li class="repo-nome ultimo-commit">Nome repositório: {{ repo.nome }}</li>
+        <li class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}"></a></li>
+        <li class="repo-descricao ultimo-commit">Descrição: {{ repo.descricao }}</li>
+        <li class="repo-data-ultimo_commit_str ultimo-commit">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
+        {% if repo.arquivado %}
+            <li class="repo-arquivado ultimo-commit">Arquivado: Sim</li>
+        {% else %}
+            <li class="repo-arquivado ultimo-commit">Arquivado: Não</li>
+        {% endif %}
+
+    {% endfor %}
+
     {% endif %}
 
     {% if messages %}

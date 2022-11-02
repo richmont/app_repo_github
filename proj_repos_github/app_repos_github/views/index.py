@@ -11,6 +11,7 @@ from app_repo_github.gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, G
 def index(request):
     if request.method == 'POST' and request.POST['input-usuario-github'] != '':
         usuario = request.POST['input-usuario-github']
+        alfabetico = True
         try:
             
             cliente_usuario = ClienteUsuarios(f"{GH_API_BASE_URL}{GH_USUARIOS_ENDPOINT}", usuario)
@@ -21,16 +22,12 @@ def index(request):
                 'avatar_url': cliente_usuario.avatar_url,
                 'html_url': cliente_usuario.html_url
             }
-            """
-            dict_usuario = {
-                'id': 12012,
-                'nome': "richelmy",
-                'login': "richmont",
-                'avatar_url': 'http://localhost',
-                'html_url': 'http://github.com/users/richmont'
-            }
-            """
-            return render(request, 'index.html', {"usuario": dict_usuario})
+
+            cliente_repositorios = ClienteRepositorios(cliente_usuario.repos_url, limite=0)
+            repo_alfabetico = cliente_repositorios.lista_repositorios_alfabetico
+            repo_ultimo_commit = cliente_repositorios.lista_repositorios_ultimo_commit
+
+            return render(request, 'index.html', {"usuario": dict_usuario, "repo_alfabetico": repo_alfabetico, "repo_ultimo_commit": repo_ultimo_commit})
         except Erros.ObjetoNaoExiste:
             messages.add_message(request, messages.ERROR, f"Usuário não encontrado: {usuario}")
 
