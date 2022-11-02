@@ -1,5 +1,5 @@
 from requests import Session
-from conf.configuracoes import PERSONAL_TOKEN, LOGIN
+from app_repo_github.gh_api_cliente.conf.configuracoes import PERSONAL_TOKEN, LOGIN
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Sessao")

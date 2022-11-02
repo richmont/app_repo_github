@@ -1,9 +1,10 @@
 from datetime import date
-from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
+from app_repo_github.gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 import requests
 import logging
+import re
 import dateutil.parser
-from Sessao import Session
+from app_repo_github.gh_api_cliente.Sessao import Session
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Cliente")
@@ -53,7 +54,7 @@ class Erros():
         pass
     
 class ClienteUsuarios(ClienteBase):
-    def __init__(self, api_url: str, usuario: str, timeout: int = 3) -> None:
+    def __init__(self, api_url: str, usuario_bruto: str, timeout: int = 3) -> None:
         """cliente para consulta de informações de um usuário do github
 
         Args:
@@ -61,8 +62,9 @@ class ClienteUsuarios(ClienteBase):
             usuario (str): Nome de usuário a ser consultado               
             timeout (int, optional): Limite do tempo de resposta. Padrão é 3.
         """
-        logger.debug("começando o trabalho com o usuário: %s", usuario)
-        self._usuario = usuario
+        
+        self._usuario = re.sub(r'[^a-zA-Z]', '', usuario_bruto)
+        logger.debug("começando o trabalho com o usuário: %s", self._usuario)
         super().__init__(f"{api_url}{self._usuario}", timeout)
         self.login = None
         self.id = None
