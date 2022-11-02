@@ -1,10 +1,11 @@
+from datetime import date
 from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 import requests
 import logging
 import dateutil.parser
 from Sessao import Session
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Cliente")
 
 class ClienteBase():
@@ -116,8 +117,16 @@ class ClienteRepositorios(ClienteBase):
             commits_url = x["commits_url"].split('{')[0]
 
             # obtém a data do último commit deste repositório
-            cliente_commits = ClienteCommits(commits_url)
-            data_commit = cliente_commits.data_commit_mais_recente
+
+            """
+            Abordagem de calcular o commit mais recente pela listagem completa
+            é muito custosa no consumo dos limites da API
+
+            #cliente_commits = ClienteCommits(commits_url)
+            #data_commit = cliente_commits.data_commit_mais_recente
+            """
+            data_commit = dateutil.parser.isoparse(x['pushed_at'])
+            
             repo = {
                 "repo_id": x["id"],
                 "nome": x["name"],
@@ -203,26 +212,10 @@ class ClienteCommits(ClienteBase):
 if __name__ == "__main__":
     cliente_usuario = ClienteUsuarios(f"{GH_API_BASE_URL}{GH_USUARIOS_ENDPOINT}", 'richmont')
     cliente_repositorios = ClienteRepositorios(cliente_usuario.repos_url, limite=0)
-    repo_alfabetico = cliente_repositorios.lista_repositorios_alfabetico[0]
-    repo_ultimo_commit = cliente_repositorios.lista_repositorios_ultimo_commit[0]
+    for x in cliente_repositorios.lista_repositorios_ultimo_commit:
+        print(x['data_ultimo_commit_str'])
+    #repo_alfabetico = cliente_repositorios.lista_repositorios_alfabetico[0]
+    #repo_ultimo_commit = cliente_repositorios.lista_repositorios_ultimo_commit[0]
 
-    print("Repositório na ordem alfabética: ", repo_alfabetico)
-    print("Repositório na ordem ultimo commit: ", repo_ultimo_commit)
-    #commits_url = cliente_repositorios.lista_repositorios[0]['commits_url']
-    #print(commits_url)
-    #cliente_commits = ClienteCommits(commits_url)
-    #print(json.dumps(cliente_commits._resposta, indent=4))
-    #commit_recente = cliente_commits.commits_por_data(ascendente=False)[0]
-    #commit_antigo = cliente_commits.commits_por_data(ascendente=True)[0]
-    #print(commit_antigo['commit_mensagem'])
-    #print("=============")
-    #print(commit_recente['commit_mensagem'])
-    #print(sorted(cliente_commits.lista_commits, key=lambda commit: commit['commit_data'])[0])
-    
-
-    """
-    print("Data do commit: ", commit['commit_data'])
-    print("Login do autor: ", commit['commit_autor_login'])
-    print("Login do nome: ", commit['commit_autor_nome'])
-    print("Mensagem do commit: ", commit['commit_mensagem'])
-    """
+    #print("Repositório na ordem alfabética: ", repo_alfabetico)
+    #print("Repositório na ordem ultimo commit: ", repo_ultimo_commit)
