@@ -26,4 +26,23 @@ const obterListaRepositorios = (id_lista) => {
     }
       
   });
-  
+
+  var checkbox_arquivados = document.querySelector("#checkbox-exibir-arquivados");
+  checkbox_arquivados.addEventListener('change', function() {
+    
+    if (this.checked) {
+      for (let repo of listaRepositorios){ 
+        if(repo.querySelector('.repo-arquivado').innerText == 'Arquivado: Sim'){
+          repo.style.display = ''}
+        
+        
+       }
+      } else {
+      for (let repo of listaRepositorios){ 
+        if(repo.querySelector('.repo-arquivado').innerText == 'Arquivado: Sim'){
+          repo.style.display = 'none'
+        } 
+    }
+  }
+}
+);

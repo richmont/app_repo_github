@@ -29,7 +29,9 @@
         <li><img src='{{usuario.avatar_url}}' class="usuario-avatar_url"></img></li>
         <li class="usuario-html-url"><a href="{{usuario.html_url}}"></a></li>
         </ul>
-        <input id="barraBusca" type="text" placeholder="Digite aqui"></input>
+        <input class='input-group-text input-group-lg' id="barraBusca" type="text" placeholder="Filtre os repositórios pelo nome"></input>
+        <p>Exibir repositórios arquivados?</p>
+        <input id="checkbox-exibir-arquivados" type="checkbox" checked>
         <div id="lista-repositorios">
         {% for repo in repo_alfabetico %}
         <ul class="repositorio-item" id="repositorio-item">
