@@ -19,7 +19,7 @@ const obterListaRepositorios = (id_lista) => {
       console.log(stringBusca);
       for (let repo of listaRepositorios){ 
         if(repo.querySelector('.repo-nome').innerText.toLowerCase().includes(stringBusca)){
-          continue
+          repo.style.display = ''
         } else{
           repo.style.display = 'none'
         }
