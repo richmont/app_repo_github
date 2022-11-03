@@ -27,17 +27,34 @@
         <li class="usuario-nome">{{usuario.nome}}</li>
         <li class="usuario-login">{{usuario.login}}</li>
         <li><img src='{{usuario.avatar_url}}' class="usuario-avatar_url"></img></li>
-        <li class="usuario-html-url"><a href="{{usuario.html_url}}"></a></li>
+        <li class="usuario-html-url"><a href="{{usuario.html_url}}">{{ repo.html_url }}</a></li>
         </ul>
-        <input class='input-group-text input-group-lg' id="barraBusca" type="text" placeholder="Filtre os repositórios pelo nome"></input>
-        <p>Exibir repositórios arquivados?</p>
-        <input id="checkbox-exibir-arquivados" type="checkbox" checked>
+        <ul class="filtros">
+            <fieldset>
+            <li><input class='input-group-text input-group-lg' id="barraBusca" type="text" placeholder="Filtre os repositórios pelo nome"></input></li>
+            
+            <li><p>Exibir repositórios arquivados?</p><input id="checkbox-exibir-arquivados" type="checkbox" checked></li>
+            
+                <legend>Selecione a ordem dos repositórios</legend>
+            
+                <div>
+                  <input type="radio" id="radio-ultimo-commit" class='radio-ordenar' name="radio-ordenar" value="ultimo-commit"
+                         checked>
+                  <label for="ultimo-commit">Ordem por último commit</label>
+                </div>
+            
+                <div>
+                  <input type="radio" id="radio-alfabetica" class='radio-ordenar' name="radio-ordenar" value="alfabetica">
+                  <label for="radio-alfabetica">Ordem alfabética</label>
+                </div>
+            </fieldset>
+        </ul>
         <div id="lista-repositorios">
         {% for repo in repo_alfabetico %}
-        <ul class="repositorio-item" id="repositorio-item">
-            <li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>
+        <ul class="repositorio-item list-group alfabetico" id="repositorio-item">
+            <!--<li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>-->
             <li class="repo-nome alfabetico">Nome repositório: {{ repo.nome }}</li>
-            <li class="repo-html-url alfabetico">Link do repositório: <a href="{{ repo.html_url }}"></a></li>
+            <li class="repo-html-url alfabetico">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></li>
             <li class="repo-descricao alfabetico">Descrição: {{ repo.descricao }}</li>
             <li class="repo-data_ultimo_commit_str alfabetico">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
             {% if repo.arquivado %}
@@ -49,8 +66,8 @@
         {% endfor %}
 
         {% for repo in repo_ultimo_commit %}
-            <ul class="repositorio-item" id="repositorio-item">
-                <li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>
+            <ul class="repositorio-item ultimo-commit" id="repositorio-item">
+                <!--<li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>-->
                 <li class="repo-nome ultimo-commit">Nome repositório: {{ repo.nome }}</li>
                 <li class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}"></a></li>
                 <li class="repo-descricao ultimo-commit">Descrição: {{ repo.descricao }}</li>
@@ -63,6 +80,7 @@
             </ul>
         {% endfor %}
     </div>
+    <script src="{% static 'index/js/index.js' %}"></script>
     {% endif %}
 
     {% if messages %}
@@ -73,6 +91,6 @@
         {% endfor %}
     {% endif %}
 </div>
-<script src="{% static 'index/js/index.js' %}"></script>
+
 </body>
 </html

@@ -8,11 +8,7 @@ const obterListaRepositorios = (id_lista) => {
 
   listaRepositorios = obterListaRepositorios('lista-repositorios');
   
-  for (let repo of listaRepositorios)
-  { 
-    console.log(repo.querySelector('.repo-nome').innerText)
-    }
-  
+ 
   const barraBusca = document.getElementById('barraBusca');
   barraBusca.addEventListener('input', (e)=> {
       const stringBusca = e.target.value.toLowerCase();
@@ -46,3 +42,41 @@ const obterListaRepositorios = (id_lista) => {
   }
 }
 );
+var listaRadioOrdenar = document.querySelectorAll('.radio-ordenar')
+
+
+const ordenarRepo = (listaRadioOrdenar) => {
+  
+  for(let radio of listaRadioOrdenar){
+    radio.addEventListener('change', function() {
+      reposAlfabetico = document.querySelectorAll('.alfabetico')
+      reposUltimoCommit = document.querySelectorAll('.ultimo-commit')
+    if(radio.id == 'radio-ultimo-commit' && radio.checked){
+      
+        for(let repo of reposAlfabetico){
+          repo.style.display = 'none'
+        }
+      } else{
+        for(let repo of reposAlfabetico){
+          repo.style.display = ''
+        
+      }
+
+    }
+    if(radio.id == 'radio-alfabetica' && radio.checked){
+          for(let repo of reposUltimoCommit){
+            repo.style.display = 'none'
+          }
+    } else{
+          for(let repo of reposUltimoCommit){
+            repo.style.display = ''
+          }
+    }
+    console.log(radio.checked)
+    console.log(radio.id)
+    }
+  
+)
+  }}
+ordenarRepo(listaRadioOrdenar);
+
