@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+sys.path.append(os.environ['VIRTUAL_ENV'])
 
 def main():
     """Run administrative tasks."""
