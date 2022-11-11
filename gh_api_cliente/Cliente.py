@@ -1,10 +1,11 @@
 from datetime import date
-from app_repo_github.gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
+#from pythonpath import Caminho
+from gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 import requests
 import logging
 import re
 import dateutil.parser
-from app_repo_github.gh_api_cliente.Sessao import Session
+from gh_api_cliente.Sessao import Session
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Cliente")

@@ -1,0 +1,2 @@
+runtime: python310
+entrypoint: gunicorn -w 3 --chdir proj_repos_github/ proj_repos_github.wsgi:application --reload --timeout 900
