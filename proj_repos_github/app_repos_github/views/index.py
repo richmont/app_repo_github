@@ -3,7 +3,12 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 # https://stackoverflow.com/questions/10388033/csrf-verification-failed-request-aborted
-
+import sys, os
+try:
+    sys.path.append(os.environ['VIRTUAL_ENV'])
+except KeyError:
+    sys.path.append('../..')
+    sys.path.append('..')
 from app_repo_github.gh_api_cliente.Cliente import ClienteRepositorios, ClienteUsuarios, Erros
 from app_repo_github.gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 
