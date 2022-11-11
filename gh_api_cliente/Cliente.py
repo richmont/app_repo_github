@@ -1,5 +1,4 @@
 from datetime import date
-#from pythonpath import Caminho
 from gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 import requests
 import logging

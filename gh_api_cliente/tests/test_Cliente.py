@@ -1,6 +1,7 @@
 import pytest
-import sys
-sys.path.append("..")
+import sys, os
+sys.path.append(os.getcwd())
+sys.path.append('..')
 from Cliente import ClienteUsuarios, Erros
 from conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
 
