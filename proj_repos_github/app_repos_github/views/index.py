@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+import sys, os
+sys.path.append(os.getcwd())
 # https://stackoverflow.com/questions/10388033/csrf-verification-failed-request-aborted
 from gh_api_cliente.Cliente import ClienteRepositorios, ClienteUsuarios, Erros
 from gh_api_cliente.conf.configuracoes import GH_API_BASE_URL, GH_USUARIOS_ENDPOINT
