@@ -54,7 +54,7 @@
         </ul>
         <div id="lista-repositorios">
         {% for repo in repo_alfabetico %}
-        <ul class="repositorio-item list-group alfabetico" id="repositorio-item">
+        <ul class="repositorio-item list-group alfabetico" id="repositorio-item" style="display: none;">
             <!--<li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>-->
             <li class="repo-nome alfabetico">Nome repositório: {{ repo.nome }}</li>
             <li class="repo-html-url alfabetico">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></li>
@@ -69,10 +69,10 @@
         {% endfor %}
 
         {% for repo in repo_ultimo_commit %}
-            <ul class="repositorio-item ultimo-commit" id="repositorio-item">
+            <ul class="repositorio-item list-group ultimo-commit" id="repositorio-item" >
                 <!--<li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>-->
                 <li class="repo-nome ultimo-commit">Nome repositório: {{ repo.nome }}</li>
-                <li class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}"></a></li>
+                <li class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></li>
                 <li class="repo-descricao ultimo-commit">Descrição: {{ repo.descricao }}</li>
                 <li class="repo-data-ultimo_commit_str ultimo-commit">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
                 {% if repo.arquivado %}
