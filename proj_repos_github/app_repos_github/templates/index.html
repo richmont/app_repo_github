@@ -26,7 +26,7 @@
     
     {% if usuario %}
         
-        <div class="container">
+        <div class="container mx-auto">
           <div class="row">
             <div class="col">
               <ul class="list-group dados-usuario">
@@ -55,37 +55,46 @@
           </div>
         </div>
           
-      
-        <div id="lista-repositorios">
-        {% for repo in repo_alfabetico %}
-        <ul class="repositorio-item list-group alfabetico oculto" id="repositorio-item">
-            <!--<li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>-->
-            <li class="repo-nome alfabetico oculto">Nome repositório: {{ repo.nome }}</li>
-            <li class="repo-html-url alfabetico oculto">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></li>
-            <li class="repo-descricao alfabetico oculto">Descrição: {{ repo.descricao }}</li>
-            <li class="repo-data_ultimo_commit_str alfabetico oculto">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
-            {% if repo.arquivado %}
-                <li class="repo-arquivado alfabetico oculto">Arquivado: Sim</li>
-            {% else %}
-                <li class="repo-arquivado alfabetico oculto">Arquivado: Não</li>
-            {% endif %}
-        </ul>
-        {% endfor %}
-
-        {% for repo in repo_ultimo_commit %}
-            <ul class="repositorio-item list-group ultimo-commit" id="repositorio-item" >
-                <!--<li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>-->
-                <li class="repo-nome ultimo-commit">Nome repositório: {{ repo.nome }}</li>
-                <li class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></li>
-                <li class="repo-descricao ultimo-commit">Descrição: {{ repo.descricao }}</li>
-                <li class="repo-data-ultimo_commit_str ultimo-commit">Data último commit: {{ repo.data_ultimo_commit_str }}</li>
+        <p>Número de repositórios localizados: {{ repo_ultimo_commit|length }}</p>
+        <div id="lista-repositorios" class="col">
+            <ul class="list-group">
+            {% for repo in repo_alfabetico %}
                 {% if repo.arquivado %}
-                    <li class="repo-arquivado ultimo-commit">Arquivado: Sim</li>
+                    <div class="list-group-item disabled repositorio-item row alfabetico oculto" id="repositorio-item">
+                    <p class="repo-arquivado alfabetico oculto">Arquivado: Sim</p>
                 {% else %}
-                    <li class="repo-arquivado ultimo-commit">Arquivado: Não</li>
+
+                    <div class="list-group-item repositorio-item row alfabetico oculto" id="repositorio-item">
+                    <p class="repo-arquivado alfabetico oculto">Arquivado: Não</p>
                 {% endif %}
-            </ul>
-        {% endfor %}
+                    <!--<li class="repo-id alfabetico">ID do repositório: {{ repo.id }}</li>-->
+                    <p class="repo-nome alfabetico oculto">Nome repositório: {{ repo.nome }}</p>
+                    <p class="repo-html-url alfabetico oculto">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></p>
+                    <p class="repo-descricao alfabetico oculto">Descrição: {{ repo.descricao }}</p>
+                    <p class="repo-data_ultimo_commit_str alfabetico oculto">Data último commit: {{ repo.data_ultimo_commit_str }}</p>
+
+                    </div>
+            {% endfor %}
+
+            {% for repo in repo_ultimo_commit %}
+            
+                {% if repo.arquivado %}
+                    <div class="list-group-item disabled repositorio-item row ultimo-commit" id="repositorio-item">
+                    <p class="repo-arquivado ultimo-commit">Arquivado: Sim</p>
+                {% else %}
+
+                    <div class="list-group-item repositorio-item row ultimo-commit" id="repositorio-item">
+                    <p class="repo-arquivado ultimo-commit">Arquivado: Não</p>
+                {% endif %}
+                    <!--<li class="repo-id ultimo-commit">ID do repositório{{ repo.id }}</li>-->
+                    <p class="repo-nome ultimo-commit">Nome repositório: {{ repo.nome }}</p>
+                    <p class="repo-html-url ultimo-commit">Link do repositório: <a href="{{ repo.html_url }}">{{repo.html_url}}</a></p>
+                    <p class="repo-descricao ultimo-commit">Descrição: {{ repo.descricao }}</p>
+                    <p class="repo-data-ultimo_commit_str ultimo-commit">Data último commit: {{ repo.data_ultimo_commit_str }}</p>
+
+                </div>
+            {% endfor %}
+        </ul>
     </div>
     <script src="{% static 'index/js/index.js' %}"></script>
     {% endif %}

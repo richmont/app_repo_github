@@ -28,7 +28,11 @@ def index(request):
             repo_alfabetico = cliente_repositorios.lista_repositorios_alfabetico
             repo_ultimo_commit = cliente_repositorios.lista_repositorios_ultimo_commit
 
-            return render(request, 'index.html', {"usuario": dict_usuario, "repo_alfabetico": repo_alfabetico, "repo_ultimo_commit": repo_ultimo_commit})
+            return render(request, 'index.html', {
+                "usuario": dict_usuario, 
+                "repo_alfabetico": repo_alfabetico, 
+                "repo_ultimo_commit": repo_ultimo_commit
+            })
         except Erros.ObjetoNaoExiste:
             messages.add_message(request, messages.ERROR, f"Usuário não encontrado: {usuario}")
 
