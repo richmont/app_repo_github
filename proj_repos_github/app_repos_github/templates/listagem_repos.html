@@ -1,17 +1,21 @@
 {% if usuario %}
-        
-        <div class="container mx-auto">
-          <div class="row">
-            <div class="col">
-              <ul class="list-group dados-usuario">
-                <li class="list-group-item align-items-center usuario-avatar-url"><img src='{{usuario.avatar_url}}' class="usuario-avatar-url"></img></li>
-                <!--<li class="list-group-item usuario-id">{{usuario.id}}</li>-->
-                <li class="list-group-item usuario-nome">Nome: {{usuario.nome}}</li>
-                <li class="list-group-item usuario-login">Login: {{usuario.login}}</li>
+<div class="position-relative container">
+    <div class="row mt-5">
+        <div class="col d-flex justify-content-center">
+            <div class="card w-25  dados-usuario">
+                <img src='{{usuario.avatar_url}}' class="card-img-top usuario-avatar-url"></img>
+                <div class="card-body text-center">
                 
-                <li class="list-group-item usuario-html-url"><a href="{{usuario.html_url}}">{{usuario.html_url}}</a></li>
-                </ul>
+                <p class="card-title usuario-nome">Nome: {{usuario.nome}}</p>
+                <p class="card-subtitle usuario-login">Login: {{usuario.login}}</p>
+                <!--<li class="list-group-item usuario-id">{{usuario.id}}</li>-->
+                <a href="{{usuario.html_url}}" class="usuario-html-url btn btn-primary">Acessar o perfil <i class="fa-brands fa-github"></i></a>
+                
+                </div>
             </div>
+        </div>
+    </div>
+</div>
             <div class="col">
               <input class='input-group-text input-group-lg' id="barraBusca" type="text" placeholder="Filtre os repositórios pelo nome"></input>
             </div>
